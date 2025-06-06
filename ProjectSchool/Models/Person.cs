@@ -2,6 +2,7 @@
 {
     public class Person
     {
+        public int Id { get; set; } // Primärschlüssel
         private string _geschlecht;
 
         public string Geschlecht
@@ -26,7 +27,7 @@
         public Person(DateTime geburtstag, string geschlecht)
         {
             Geburtstag = geburtstag;
-            Geschlecht = geschlecht; // Setter wird aufgerufen
+            Geschlecht = geschlecht;
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     public class Schueler : Person
     {
+        public int SchuleId { get; set; } // Fremdschlüssel zu Schule
         public string Klasse { get; set; }
         public List<string> klassen = new List<string>();
 

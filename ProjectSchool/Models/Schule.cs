@@ -2,6 +2,7 @@
 {
     public class Schule
     {
+        public int Id { get; set; } // Primärschlüssel
         public List<Schueler> SchuelerList = new List<Schueler>();
         public List<Klassenraum> KlassenraumList = new List<Klassenraum>();
 
