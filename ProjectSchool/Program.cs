@@ -1,23 +1,29 @@
+using ProjectSchool.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// CORS für lokale Anfragen aktivieren
+// Add DbContext
+builder.Services.AddDbContext<SchoolDbContext>();
+
+// CORS fÃ¼r lokale Anfragen aktivieren
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", policy =>
     {
-        policy.WithOrigins("http://127.0.0.1:5107")
-              .AllowAnyMethod() // Erlaubt GET, POST, PUT, DELETE, etc.
-              .AllowAnyHeader(); // Erlaubt alle Header
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
     });
 });
 
-// Services hinzufügen
+// Services hinzufÃ¼gen
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Important: CORS middleware must be called early in the pipeline
 app.UseCors("AllowLocalhost");
 
 if (app.Environment.IsDevelopment())
@@ -26,10 +32,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Remove HTTPS redirection since we're getting a warning about it
+// app.UseHttpsRedirection();
+
 app.UseStaticFiles();
-app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-
 
 app.Run();

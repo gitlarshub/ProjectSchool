@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjectSchool.Models;
+using ProjectSchool.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,18 @@ namespace ProjectSchool.Controllers
     [Route("api/schule")]
     public class SchoolController : ControllerBase
     {
-        private static Schule schule = new Schule();
+        private readonly SchoolDbContext _context;
+
+        public SchoolController(SchoolDbContext context)
+        {
+            _context = context;
+            // Ensure we have a school
+            if (!_context.Schulen.Any())
+            {
+                _context.Schulen.Add(new Schule());
+                _context.SaveChanges();
+            }
+        }
 
         [HttpPost("addSchueler")]
         public IActionResult AddSchueler([FromBody] Schueler schueler)
@@ -21,7 +33,10 @@ namespace ProjectSchool.Controllers
             }
             try
             {
+                var schule = _context.Schulen.First();
                 schule.AddSchuelerToSchule(schueler);
+                _context.Schueler.Add(schueler);
+                _context.SaveChanges();
                 return Ok("Schüler hinzugefügt!");
             }
             catch (InvalidDataException ex)
@@ -33,19 +48,23 @@ namespace ProjectSchool.Controllers
         [HttpGet("getAllSchueler")]
         public IActionResult GetAllSchueler()
         {
-            return Ok(schule.SchuelerList);
+            var schule = _context.Schulen.First();
+            return Ok(_context.Schueler.ToList());
         }
 
         [HttpGet("getSchuelerByKlasse/{klasse}")]
         public IActionResult GetSchuelerByKlasse(string klasse)
         {
-            var schuelerInKlasse = schule.SchuelerList.Where(s => s.Klasse == klasse).ToList();
+            var schuelerInKlasse = _context.Schueler
+                .Where(s => s.Klasse == klasse)
+                .ToList();
             return Ok(schuelerInKlasse);
         }
 
         [HttpGet("kannUnterrichten/{klasse}/{raumName}")]
         public IActionResult KannUnterrichten(string klasse, string raumName)
         {
+            var schule = _context.Schulen.First();
             bool kannUnterrichten = schule.KannKlasseUnterrichten(klasse, raumName);
             return Ok(kannUnterrichten ? "Ja, die Klasse kann unterrichtet werden." : "Nein, es gibt nicht genug Plätze.");
         }
