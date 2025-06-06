@@ -2,7 +2,7 @@
 {
     public class Schule
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
         public List<Schueler> SchuelerList = new List<Schueler>();
         public List<Klassenraum> KlassenraumList = new List<Klassenraum>();
 
@@ -37,10 +37,6 @@
                 }
             }
             return KlassenraumCynap;
-        }
-        public int AnzahlKlassen(Schueler schueler)
-        {
-            return schueler.klassen.Count;
         }
         public float DurchschnittsalterSchueler()
         {
