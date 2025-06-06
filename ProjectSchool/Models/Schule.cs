@@ -38,37 +38,6 @@
             }
             return KlassenraumCynap;
         }
-        public float DurchschnittsalterSchueler()
-        {
-            int sumAlter = 0;
-            foreach (Schueler schueler in SchuelerList)
-            {
-                sumAlter += schueler.Alter;
-            }
-            return (float)sumAlter / AnzahlSchueler;
-        }
-        public double BerechneFrauenanteilInProzent(List<Schueler> schuelerListe, string klasse)
-        {
-            int anzahlSchueler = 0;
-            int anzahlFrauen = 0;
-
-            foreach (Schueler schueler in schuelerListe)
-            {
-                if (schueler.Klasse == klasse)
-                {
-                    anzahlSchueler++;
-                    if (schueler.Geschlecht == "weiblich")
-                    {
-                        anzahlFrauen++;
-                    }
-                }
-            }
-
-            if (anzahlSchueler == 0)
-                return 0;
-
-            return (double)anzahlFrauen / anzahlSchueler * 100;
-        }
 
         public bool KannKlasseUnterrichten(string klasse, string raumName)
         {
@@ -96,26 +65,5 @@
             return raum.Plaetze >= schuelerInKlasse;
         }
 
-        public string AnzahlSchuelerGeschlecht
-        {
-            get
-            {
-                int männlicheSchueler = 0;
-                int weiblicheSchueler = 0;
-
-                foreach (Schueler schueler in SchuelerList)
-                {
-                    if (schueler.Geschlecht == "männlich")
-                    {
-                        männlicheSchueler++;
-                    }
-                    else if (schueler.Geschlecht == "weiblich")
-                    {
-                        weiblicheSchueler++;
-                    }
-                }
-                return $"männliche: {männlicheSchueler} / weibliche: {weiblicheSchueler}";
-            }
-        }
     }
 }
