@@ -2,7 +2,7 @@
 {
     public class Person
     {
-        public int Id { get; set; } // Primärschlüssel
+        public int Id { get; set; }
         private string _geschlecht;
 
         public string Geschlecht

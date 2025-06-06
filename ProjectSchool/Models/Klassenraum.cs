@@ -3,7 +3,7 @@
     public class Klassenraum
     {
         public int Id { get; set; }
-        public int SchuleId { get; set; } // Fremdschlüssel zu Schule
+        public int SchuleId { get; set; } 
         public float RaumInQm { get; set; }
         public int Plaetze { get; set; }
         public bool HasCynap { get; set; }

@@ -1,7 +1,7 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
     const baseUrl = "http://localhost:5107";
 
-    // Schüler hinzufügen
+    // add schüler
     document.getElementById("addStudentForm").addEventListener("submit", async (event) => {
         event.preventDefault();
         const geburtstag = document.getElementById("geburtstag").value; 

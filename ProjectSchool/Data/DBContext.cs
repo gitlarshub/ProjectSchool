@@ -17,29 +17,25 @@ namespace ProjectSchool.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Schueler>().ToTable("Schueler")
-                .HasKey(s => s.Id); // Primärschlüssel für Schueler (von Person geerbt)
+                .HasKey(s => s.Id); 
 
             modelBuilder.Entity<Klassenraum>().ToTable("Klassenraeume")
-                .HasKey(k => k.Id); // Primärschlüssel für Klassenraum
-
+                .HasKey(k => k.Id);
             modelBuilder.Entity<Schule>().ToTable("Schulen")
-                .HasKey(s => s.Id); // Primärschlüssel für Schule
+                .HasKey(s => s.Id); 
 
-            // Beziehung Schule -> Schueler
             modelBuilder.Entity<Schule>()
                 .HasMany(s => s.SchuelerList)
                 .WithOne()
                 .HasForeignKey("SchuleId")
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Beziehung Schule -> Klassenraum
             modelBuilder.Entity<Schule>()
                 .HasMany(s => s.KlassenraumList)
                 .WithOne()
                 .HasForeignKey("SchuleId")
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Many-to-many Beziehung Klassenraum -> SchuelerImRaum
             modelBuilder.Entity<Klassenraum>()
                 .HasMany(k => k.SchuelerImRaum)
                 .WithMany()
